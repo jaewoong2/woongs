@@ -1,26 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'github-markdown-css';
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css');
 
 html,
-body {
-  color: #adbac7;
+body,
+#__next {
+  width: 100%;
+  height: 100%;
 }
 
-.markdown-body {
-  background-color: transparent;
+* {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
 }
 
-.markdown-body blockquote {
-  @apply p-3 bg-slate-800;
+.code {
+  padding: 0 0 0 0 !important;
+  @apply py-6 px-4 !important;
 }
 
-.markdown-body h2,
-.markdown-body h1 {
-  @apply border-[#444c56];
+.notion-toggle {
+  width: 100%;
 }
 
-.prose > ul {
-  padding: 0 !important;
+.notion-toggle > summary {
+  width: 100%;
+  position: relative;
+}
+
+.notion-toggle > summary::marker {
+  unicode-bidi: isolate-override;
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+  text-indent: 0px !important;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+.notion-toggle > summary > h3 {
+  width: calc(100% - 20px);
+}
+
+.drawer {
+  @apply ease-in-out duration-300;
 }
