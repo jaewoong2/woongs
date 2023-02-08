@@ -5,9 +5,7 @@ export default function Document() {
     <Html className="w-full h-full">
       <Head />
       <body className="w-full h-full">
-        <div className="w-full h-full flex">
-          <Main />
-        </div>
+        <Main />
         <NextScript />
       </body>
     </Html>

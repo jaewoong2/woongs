@@ -17,9 +17,7 @@ type Props = {
 const Footer = ({ prevoius, next }: Props) => {
   return (
     <footer className="px-2 pt-4 pb-8 w-full flex justify-center">
-      <div
-        className={`flex max-w-[720px] w-full px-2 ${prevoius ? 'justify-between' : 'justify-end'}`}
-      >
+      <div className={`flex w-full px-2 ${prevoius ? 'justify-between' : 'justify-end'}`}>
         {prevoius && (
           <Link href={`/${prevoius.id}`}>
             <PreviousButton

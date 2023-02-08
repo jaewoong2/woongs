@@ -1,5 +1,4 @@
 import notion from 'service/NotionApi'
-import Header from '@components/organisms/Header'
 import NotionRenderer from '@components/organisms/NotionRenderer'
 import { ExtendedRecordMap } from 'notion-types'
 import Footer from '@components/organisms/Footer'
@@ -12,12 +11,9 @@ type Props = {
   prevId: { id: string; slug: string }
 }
 
-const Home = ({ recordMap, title, id, nextId, prevId }: Props) => {
+const Home = ({ recordMap, id, nextId, prevId }: Props) => {
   return (
     <div className="px-6 grid grid-cols-12">
-      <Header>
-        <span className="text-sm">{title}</span>
-      </Header>
       <section className="col-span-3"></section>
       <section className="w-full md:col-span-6 col-span-full">
         <NotionRenderer recordMap={recordMap} id={id} />

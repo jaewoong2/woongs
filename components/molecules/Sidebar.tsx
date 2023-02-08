@@ -1,20 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useMemo, useState } from 'react'
-
-import DoubleLeftIcon from '@components/icons/DoubleLeftIcon'
 import RightIcon from '@components/icons/RightIcon'
-import { useAppDispatch, useAppSelector } from 'hooks/useReducerHook'
-import { setStyleState } from 'slices/styleSlice'
+import { useAppSelector } from 'hooks/useReducerHook'
 
 const Sidebar = () => {
   const [drawer, setDrawer] = useState(false)
   const { isFullPage } = useAppSelector((state) => state.styleSlice)
-  const dispatch = useAppDispatch()
-
-  const toggleFullPage = () => {
-    dispatch(setStyleState({ isFullPage: !isFullPage }))
-  }
 
   useEffect(() => {
     const mouseMove = (e: MouseEvent) => {
@@ -36,25 +28,15 @@ const Sidebar = () => {
     () =>
       !isFullPage
         ? drawer
-          ? 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 translate-x-0 ease-in-out duration-300 opacity-100'
+          ? 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 translate-x-0 ease-in-out duration-300 opacity-100 drop-shadow-xl'
           : 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 ease-in-out duration-300 -translate-x-full opacity-0'
-        : 'block h-full',
+        : 'fixed h-full',
     [isFullPage, drawer]
   )
 
   return (
-    <nav className={`w-52 bg-stone-50 ${navStyle} z-10 drop-shadow-xl`}>
-      <div className="w-full flex justify-end">
-        {isFullPage && (
-          <span
-            className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer"
-            onClick={toggleFullPage}
-          >
-            <DoubleLeftIcon className="w-4 h-4 text-gray-400" />
-          </span>
-        )}
-      </div>
-      <div className="flex flex-col items-center w-full">
+    <nav className={`w-52 bg-stone-50 ${navStyle} z-20`}>
+      <div className="flex flex-col items-center w-full pt-10">
         <Image
           src={'/me.jpeg'}
           width="96"

@@ -1,22 +1,22 @@
-import Header from '@components/molecules/Header'
-import Sidebar from '@components/molecules/Sidebar'
-import { useAppSelector } from 'hooks/useReducerHook'
 import { AppProps } from 'next/app'
-import wrapper from 'store/store'
-import '../styles/globals.css'
 
-const App = ({ Component, pageProps }: AppProps) => {
-  const { isFullPage } = useAppSelector((state) => state.styleSlice)
+import wrapper from 'store/store'
+
+import '../styles/globals.css'
+import { Provider } from 'react-redux'
+import Layout from '@components/templates/Layout'
+import useMounted from 'hooks/useMounted'
+
+const App = ({ Component, ...rest }: AppProps) => {
+  const { store, props } = wrapper.useWrappedStore(rest)
+  const { pageProps } = props
+  const mounted = useMounted()
 
   return (
-    <section className="w-full h-full flex">
-      <Sidebar />
-      <Header title="Home" />
-      <div className={`w-full h-full ${isFullPage ? 'flex' : ''}`}>
-        <Component {...pageProps} />
-      </div>
-    </section>
+    <Provider store={store}>
+      <Layout>{mounted && <Component {...pageProps} />}</Layout>
+    </Provider>
   )
 }
 
-export default wrapper.withRedux(App)
+export default App

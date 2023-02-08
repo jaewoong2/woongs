@@ -22,6 +22,16 @@ class NotionApi {
   notionDatabaseKey = process.env.NOTION_DB_KEY
   notion = new Client({ auth: this.notionKey })
 
+  async getPage(pageId: string) {
+    const n = new Notion({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+      authToken: process.env.NOTION_TOKEN_V2,
+    })
+
+    const recordMap = await n.getPage(pageId)
+    return recordMap
+  }
+
   async getSlug(): Promise<(Item | null)[] | null> {
     if (this.notionDatabaseKey) {
       const response = await this.notion.databases.query({
@@ -87,18 +97,21 @@ class NotionApi {
     const slugs = await this.getSlug()
     const block = await this.notion.blocks.retrieve({ block_id: pageId })
     const page = await this.notion.pages.retrieve({ page_id: pageId })
-    const n = new Notion()
+
+    const n = new Notion({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+      authToken: process.env.NOTION_TOKEN_V2,
+    })
+
     const recordMap = await n.getPage(pageId)
 
     if ('created_time' in block && 'child_page' in block && 'properties' in page) {
-      if (page.properties['태그'].type === 'multi_select') {
-        if (slugs) {
-          const info = slugs.find((slug) => (slug?.post.id === pageId ? slug.post : null))
-          return {
-            title: block.child_page.title,
-            recordMap,
-            ...info?.post,
-          }
+      if (slugs) {
+        const info = slugs.find((slug) => (slug?.post.id === pageId ? slug.post : null))
+        return {
+          title: block.child_page.title,
+          recordMap,
+          ...info?.post,
         }
       }
     }

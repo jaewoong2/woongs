@@ -20,7 +20,6 @@ const NotionRenderer = ({ recordMap }: Props) => {
       fullPage={true}
       disableHeader={true}
       darkMode={false}
-      className="max-w-2xl"
       components={{
         Code: ({ ...props }: any) => <Code {...props} className="code" />,
         Collection,

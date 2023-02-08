@@ -1,23 +1,22 @@
-import ArticleCard from '@components/molecules/ArticleCard'
-import notion, { Item } from 'service/NotionApi'
+import NotionRenderer from '@components/organisms/NotionRenderer'
+import { ExtendedRecordMap } from 'notion-types'
+import notion from 'service/NotionApi'
 
 type Props = {
-  posts: Item[]
+  id: string
+  recordMap: ExtendedRecordMap
 }
 
-const Home = ({ posts }: Props) => {
+const Home = ({ id, recordMap }: Props) => {
   return (
-    <div className={`bg-white font-sans w-full h-full flex`}>
-      <main className="px-6 py-4 grid-cols-2 grid gap-x-20 gap-y-5">
-        {posts.map((post) => (
-          <ArticleCard
-            key={post.post.id}
-            title={post.slug}
-            description="하이2"
-            href={post.post.id}
-          />
-        ))}
-      </main>
+    <div className="bg-white w-full h-full flex">
+      <div className="px-6 grid grid-cols-12 w-full">
+        <section className="col-span-3"></section>
+        <section className="w-full md:col-span-6 col-span-full">
+          <NotionRenderer recordMap={recordMap} id={id} />
+        </section>
+        <section className="col-span-3"></section>
+      </div>
     </div>
   )
 }
@@ -25,11 +24,17 @@ const Home = ({ posts }: Props) => {
 export default Home
 
 export const getStaticProps = async () => {
-  const response = await notion.getSlug()
-
-  if (!response) {
-    return { props: {} }
+  if (!process.env.NOTION_HOME_KEY) {
+    return {
+      props: {},
+    }
   }
 
-  return { props: { posts: response.reverse() } }
+  const response = await notion.getPage(process.env.NOTION_HOME_KEY)
+
+  return {
+    props: {
+      recordMap: response,
+    },
+  }
 }
