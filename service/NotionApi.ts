@@ -3,6 +3,11 @@ import { Client } from '@notionhq/client/build/src'
 import { NotionAPI as Notion } from 'notion-client'
 import { generateThumbnailDataURL } from '@utils/index'
 
+const PROPERTIES = 'properties'
+const TITLE = '이름'
+const CREATED_TIME = '생성 일시'
+const TAGS = 'Tags'
+
 export type Item = {
   slug: string
   thumbnail: string
@@ -24,15 +29,71 @@ class NotionApi {
   notionKey = process.env.NOTION_API_KEY
   notionDatabaseKey = process.env.NOTION_DB_KEY
   notion = new Client({ auth: this.notionKey })
+  notionX = new Notion({
+    activeUser: process.env.NOTION_ACTIVE_USER,
+    authToken: process.env.NOTION_TOKEN_V2,
+  })
 
   async getPage(pageId: string) {
-    const n = new Notion({
-      activeUser: process.env.NOTION_ACTIVE_USER,
-      authToken: process.env.NOTION_TOKEN_V2,
-    })
-
-    const recordMap = await n.getPage(pageId)
+    const recordMap = await this.notionX.getPage(pageId)
     return recordMap
+  }
+
+  async getAllTags() {
+    if (this.notionDatabaseKey) {
+      const response = await this.notion.databases.query({
+        database_id: this.notionDatabaseKey,
+      })
+
+      const result = response.results.map((result) => {
+        if (PROPERTIES in result) {
+          if (result.properties[TAGS].type === 'multi_select') {
+            return result.properties[TAGS].multi_select.map((select) => select.name)
+          }
+          return ['']
+        }
+        return ['']
+      })
+
+      return result
+    }
+
+    return null
+  }
+
+  async getAllPosts() {
+    if (this.notionDatabaseKey) {
+      const response = await this.notion.databases.query({
+        database_id: this.notionDatabaseKey,
+      })
+
+      const results = response.results
+        .map((result) => {
+          if (PROPERTIES in result) {
+            if (
+              result.properties[TITLE].type === 'title' &&
+              result.properties[CREATED_TIME].type === 'created_time' &&
+              result.properties[TAGS].type === 'multi_select'
+            ) {
+              return {
+                title: result.properties[TITLE].title?.[0]?.plain_text,
+                tags: result.properties[TAGS].multi_select.map(({ name }) => name),
+                id: result.id,
+                thumbnail: generateThumbnailDataURL(
+                  result.properties[TITLE].title?.[0]?.plain_text
+                ),
+                createdTime: result.properties[CREATED_TIME].created_time,
+              }
+            }
+          }
+          return null
+        })
+        .filter((v) => !!v?.title)
+
+      return results
+    }
+
+    return null
   }
 
   async getSlug(): Promise<(Item | null)[] | null> {
@@ -43,17 +104,17 @@ class NotionApi {
 
       const results = response.results
         .map((result) => {
-          if ('properties' in result) {
+          if (PROPERTIES in result) {
             if (
-              result.properties['이름'].type === 'title' &&
-              result.properties['생성 일시'].type === 'created_time'
+              result.properties[TITLE].type === 'title' &&
+              result.properties[CREATED_TIME].type === 'created_time'
             ) {
               return {
-                slug: result.properties['이름'].title?.[0]?.plain_text,
+                slug: result.properties[TITLE].title?.[0]?.plain_text,
                 thumbnail: generateThumbnailDataURL(
-                  result.properties['이름'].title?.[0]?.plain_text
+                  result.properties[TITLE].title?.[0]?.plain_text
                 ),
-                createdTime: result.properties['생성 일시'].created_time,
+                createdTime: result.properties[CREATED_TIME].created_time,
                 id: result.id,
               }
             }
@@ -107,13 +168,7 @@ class NotionApi {
     const slugs = await this.getSlug()
     const block = await this.notion.blocks.retrieve({ block_id: pageId })
     const page = await this.notion.pages.retrieve({ page_id: pageId })
-
-    const n = new Notion({
-      activeUser: process.env.NOTION_ACTIVE_USER,
-      authToken: process.env.NOTION_TOKEN_V2,
-    })
-
-    const recordMap = await n.getPage(pageId)
+    const recordMap = await this.notionX.getPage(pageId)
 
     if ('created_time' in block && 'child_page' in block && 'properties' in page) {
       if (slugs) {
@@ -127,14 +182,6 @@ class NotionApi {
     }
 
     return null
-  }
-
-  async getPageMarkDown({ pageId }: { pageId: string }) {
-    const n2m = new NotionToMarkdown({ notionClient: this.notion })
-    const mdblocks = await n2m.pageToMarkdown(pageId)
-    const mdString = n2m.toMarkdownString(mdblocks)
-
-    return { md: mdString }
   }
 }
 

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { isMobile } from '@utils/index'
 
-const STYLE_SLICE = 'slice/post'
+const STYLE_SLICE = 'slice/style'
 
 export type Style = {
   isFullPage: boolean

@@ -1,11 +1,11 @@
 import { AppProps } from 'next/app'
 
-import wrapper from 'store/store'
-
-import '../styles/globals.css'
 import { Provider } from 'react-redux'
+
 import Layout from '@components/templates/Layout'
 import useMounted from 'hooks/useMounted'
+import wrapper from 'store/store'
+import '../styles/globals.css'
 
 const App = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest)

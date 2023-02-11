@@ -27,11 +27,11 @@ const Home = ({ recordMap, id, nextId, prevId }: Props) => {
 export default Home
 
 export const getStaticProps = async ({ params }: { params: { id: string } }) => {
-  const response1 = await notion.getPageInfo({ pageId: params.id })
+  const response = await notion.getPageInfo({ pageId: params.id })
 
   return {
     props: {
-      ...response1,
+      ...response,
     },
     revalidate: 1,
   }
