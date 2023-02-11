@@ -39,7 +39,10 @@ body,
   text-align-last: center !important;
 }
 
-.notion-toggle > summary > h3 {
+.notion-toggle > summary > h1,
+h2,
+h3,
+h4 {
   width: calc(100% - 20px);
 }
 

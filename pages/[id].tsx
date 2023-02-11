@@ -15,7 +15,7 @@ const Home = ({ recordMap, id, nextId, prevId }: Props) => {
   return (
     <div className="px-6 grid grid-cols-12">
       <section className="col-span-3"></section>
-      <section className="w-full md:col-span-6 col-span-full">
+      <section className="w-full xl:col-span-6 col-span-full">
         <NotionRenderer recordMap={recordMap} id={id} />
         <Footer next={nextId} prevoius={prevId} />
       </section>
@@ -33,6 +33,7 @@ export const getStaticProps = async ({ params }: { params: { id: string } }) => 
     props: {
       ...response1,
     },
+    revalidate: 1,
   }
 }
 
@@ -40,7 +41,7 @@ export const getStaticPaths = async () => {
   const response = await notion.getSlug()
 
   return {
-    fallback: false,
+    fallback: true,
     paths: response?.map((result) => {
       if (result) {
         return {

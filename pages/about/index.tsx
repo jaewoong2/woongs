@@ -12,7 +12,7 @@ const Home = ({ id, recordMap }: Props) => {
     <div className="bg-white w-full h-full flex">
       <div className="px-6 grid grid-cols-12 w-full">
         <section className="col-span-3"></section>
-        <section className="w-full xl:col-span-6 col-span-full">
+        <section className="w-full col-span-full">
           <NotionRenderer recordMap={recordMap} id={id} />
         </section>
         <section className="col-span-3"></section>
@@ -24,13 +24,13 @@ const Home = ({ id, recordMap }: Props) => {
 export default Home
 
 export const getStaticProps = async () => {
-  if (!process.env.NOTION_HOME_KEY) {
+  if (!process.env.NOTION_ABOUT_KEY) {
     return {
       props: {},
     }
   }
 
-  const response = await notion.getPage(process.env.NOTION_HOME_KEY)
+  const response = await notion.getPage(process.env.NOTION_ABOUT_KEY)
 
   return {
     props: {

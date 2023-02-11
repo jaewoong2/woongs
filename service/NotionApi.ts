@@ -1,9 +1,12 @@
 import { NotionToMarkdown } from 'notion-to-md'
 import { Client } from '@notionhq/client/build/src'
 import { NotionAPI as Notion } from 'notion-client'
+import { generateThumbnailDataURL } from '@utils/index'
 
 export type Item = {
   slug: string
+  thumbnail: string
+  createdTime: string
   post: {
     id: string
     nextId: {
@@ -41,9 +44,16 @@ class NotionApi {
       const results = response.results
         .map((result) => {
           if ('properties' in result) {
-            if (result.properties['이름'].type === 'title') {
+            if (
+              result.properties['이름'].type === 'title' &&
+              result.properties['생성 일시'].type === 'created_time'
+            ) {
               return {
                 slug: result.properties['이름'].title?.[0]?.plain_text,
+                thumbnail: generateThumbnailDataURL(
+                  result.properties['이름'].title?.[0]?.plain_text
+                ),
+                createdTime: result.properties['생성 일시'].created_time,
                 id: result.id,
               }
             }
@@ -59,7 +69,7 @@ class NotionApi {
 
         if (index === 0) {
           return {
-            slug: result?.slug,
+            ...result,
             post: {
               id: result?.id,
               nextId: results[index + 1],
@@ -70,7 +80,7 @@ class NotionApi {
 
         if (index + 1 === results.length) {
           return {
-            slug: result?.slug,
+            ...result,
             post: {
               id: result?.id,
               nextId: null,
@@ -80,7 +90,7 @@ class NotionApi {
         }
 
         return {
-          slug: result?.slug,
+          ...result,
           post: {
             id: result?.id,
             nextId: results[index + 1],

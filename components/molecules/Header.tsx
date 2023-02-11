@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from 'hooks/useReducerHook'
-import { setStyleState } from 'slices/styleSlice'
 import HambergerIcon from '@components/icons/HambergerIcon'
 import { useRouter } from 'next/router'
+import useFullPage from 'hooks/useFullPage'
+import useIsMobile from 'hooks/useIsMobile'
+import Link from 'next/link'
 
 const Header = () => {
-  const { isFullPage } = useAppSelector((state) => state.styleSlice)
-  const dispatch = useAppDispatch()
+  const [isFullPage, , setLocalStorageIsFullPage] = useFullPage()
+  const [isMobile] = useIsMobile()
+
   const router = useRouter()
   const [title, setTitle] = useState('')
 
@@ -16,10 +18,26 @@ const Header = () => {
   }, [router.pathname])
 
   const toggleFullPage = () => {
-    dispatch(setStyleState({ isFullPage: !isFullPage }))
+    setLocalStorageIsFullPage(!isFullPage)
   }
 
-  const headerStyle = 'flex items-center p-1 w-full top-0 sticky bg-white z-10'
+  const headerStyle = 'flex items-center p-1 w-full top-0 fixed bg-white z-10'
+
+  if (isMobile) {
+    return (
+      <nav className="w-full flex justify-center fixed top-0 z-10 bg-white">
+        <Link className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center" href={'/'}>
+          {`🏠 home`}
+        </Link>
+        <Link className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center" href={'/posts'}>
+          {`🥳 blog`}
+        </Link>
+        <Link className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center" href={'/about'}>
+          {`🤔 me?`}
+        </Link>
+      </nav>
+    )
+  }
 
   return (
     <header className={headerStyle}>

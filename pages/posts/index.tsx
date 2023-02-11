@@ -7,14 +7,15 @@ type Props = {
 
 const Home = ({ posts }: Props) => {
   return (
-    <div className={`bg-white font-sans w-full h-full flex`}>
-      <main className="px-6 py-4 grid-cols-2 grid gap-x-20 gap-y-5">
+    <div className="bg-white font-sans justify-center w-full flex">
+      <main className="px-5 grid min-h-full h-fit gap-5 justify-center xl:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {posts?.map((post) => (
           <ArticleCard
             key={post.post.id}
             title={post.slug}
-            description="하이2"
             href={post.post.id}
+            thumbnail={post.thumbnail}
+            createdTime={post.createdTime}
           />
         ))}
       </main>
