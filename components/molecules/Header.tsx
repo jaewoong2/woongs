@@ -29,12 +29,12 @@ const Header = () => {
           <Link className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center" href={'/'}>
             {`🏠 home`}
           </Link>
-          <Link
+          {/* <Link
             className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center"
             href={'/posts'}
           >
             {`🥳 blog`}
-          </Link>
+          </Link> */}
           <Link
             className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center"
             href={'/about'}

@@ -1,4 +1,5 @@
 import NotionRenderer from '@components/organisms/NotionRenderer'
+import { GetStaticProps } from 'next'
 import { ExtendedRecordMap } from 'notion-types'
 import notion from 'service/NotionApi'
 
@@ -23,7 +24,7 @@ const Home = ({ id, recordMap }: Props) => {
 
 export default Home
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   if (!process.env.NOTION_ABOUT_KEY) {
     return {
       props: {},
@@ -33,6 +34,7 @@ export const getStaticProps = async () => {
   const response = await notion.getPage(process.env.NOTION_ABOUT_KEY)
 
   return {
+    revalidate: 60 * 30,
     props: {
       recordMap: response,
     },
