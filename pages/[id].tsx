@@ -87,7 +87,7 @@ export const getStaticPaths = async () => {
       paths: [''].map((result) => {
         return {
           params: {
-            title: result,
+            id: result,
           },
         }
       }),
