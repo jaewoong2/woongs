@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react'
-import notion from 'service/NotionApi'
 import { useAppSelector } from './useReducerHook'
 
 type Post = {
@@ -12,28 +11,29 @@ type Post = {
 
 const useSearch = () => {
   const { posts } = useAppSelector((state) => state.postsSlice)
-
   const [search, setSearch] = useState('')
   const [result, setResult] = useState<Post[]>()
 
-  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
-    searchQuery(e.target.value)
-  }
+  const searchQuery = useCallback(
+    (q: string) => {
+      const post = posts.filter((post) => {
+        const hasSameTag = post!.tags.find((tag) => tag === decodeURIComponent(q))
+        if (hasSameTag) {
+          return true
+        }
+        return false
+      })
 
-  const searchQuery = (q: string) => {
-    const post = posts.filter((post) => {
-      const hasSameTag = post!.tags.find((tag) => tag === decodeURIComponent(q))
-      if (hasSameTag) {
-        return true
+      if (post) {
+        setResult(post)
       }
-      return false
-    })
+    },
+    [posts]
+  )
 
-    if (post) {
-      setResult(post)
-    }
-  }
+  const handleChangeSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }, [])
 
   return { search, result, handleChangeSearch, searchQuery }
 }

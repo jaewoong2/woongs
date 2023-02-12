@@ -165,23 +165,28 @@ class NotionApi {
   }
 
   async getPageInfo({ pageId }: { pageId: string }) {
-    const slugs = await this.getSlug()
-    const block = await this.notion.blocks.retrieve({ block_id: pageId })
-    const page = await this.notion.pages.retrieve({ page_id: pageId })
-    const recordMap = await this.notionX.getPage(pageId)
+    try {
+      const slugs = await this.getSlug()
+      const block = await this.notion.blocks.retrieve({ block_id: pageId })
+      const page = await this.notion.pages.retrieve({ page_id: pageId })
+      const recordMap = await this.notionX.getPage(pageId)
 
-    if ('created_time' in block && 'child_page' in block && 'properties' in page) {
-      if (slugs) {
-        const info = slugs.find((slug) => (slug?.post.id === pageId ? slug.post : null))
-        return {
-          title: block.child_page.title,
-          recordMap,
-          ...info?.post,
+      if ('created_time' in block && 'child_page' in block && 'properties' in page) {
+        if (slugs) {
+          const info = slugs.find((slug) => (slug?.post.id === pageId ? slug.post : null))
+          return {
+            title: block.child_page.title,
+            recordMap,
+            ...info?.post,
+          }
         }
       }
-    }
 
-    return null
+      return null
+    } catch (err) {
+      console.log(err)
+      return null
+    }
   }
 }
 

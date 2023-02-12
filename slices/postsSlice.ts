@@ -6,6 +6,8 @@ type Post = {
   id: string
   title: string
   tags: string[]
+  thumbnail: string
+  createdTime: string
 } | null
 
 export type POST = {

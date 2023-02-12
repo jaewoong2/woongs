@@ -15,10 +15,13 @@ const useFullPage = () => {
     [dispatch]
   )
 
-  const setLocalStorageFullPage = (value: boolean) => {
-    setLocalStorageIsFullPage(value)
-    dispatch(setIsFullPage(value))
-  }
+  const setLocalStorageFullPage = useCallback(
+    (value: boolean) => {
+      setLocalStorageIsFullPage(value)
+      dispatch(setIsFullPage(value))
+    },
+    [setLocalStorageIsFullPage, dispatch]
+  )
 
   return [isFullPage, setFullPage, setLocalStorageFullPage] as const
 }

@@ -1,4 +1,5 @@
 import NotionRenderer from '@components/organisms/NotionRenderer'
+import Layout from '@components/templates/Layout'
 import { ExtendedRecordMap } from 'notion-types'
 import notion from 'service/NotionApi'
 

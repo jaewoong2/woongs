@@ -16,7 +16,6 @@ const Layout = ({ children }: PropsWithChildren) => {
         setIsMobile(false)
       }
     }
-
     window.addEventListener('resize', listener)
     return () => {
       window.removeEventListener('resize', listener)
@@ -28,7 +27,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       <Sidebar />
       <div
         className={`w-full ${
-          !isMobile && isFullPage ? 'pl-52' : ''
+          !isMobile && isFullPage ? 'ml-52' : ''
         } relative h-full transition-all`}
       >
         <Header />

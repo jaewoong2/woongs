@@ -1,9 +1,9 @@
+import Layout from '@components/templates/Layout'
+import useMounted from 'hooks/useMounted'
 import { AppProps } from 'next/app'
 
 import { Provider } from 'react-redux'
 
-import Layout from '@components/templates/Layout'
-import useMounted from 'hooks/useMounted'
 import wrapper from 'store/store'
 import '../styles/globals.css'
 
@@ -13,9 +13,13 @@ const App = ({ Component, ...rest }: AppProps) => {
   const mounted = useMounted()
 
   return (
-    <Provider store={store}>
-      <Layout>{mounted && <Component {...pageProps} />}</Layout>
-    </Provider>
+    mounted && (
+      <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    )
   )
 }
 

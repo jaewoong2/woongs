@@ -49,3 +49,14 @@ h4 {
 .drawer {
   @apply ease-in-out duration-300;
 }
+
+.loader {
+  border-top-color: #5a67d8;
+  border-right-color: #5a67d8;
+  border-bottom-color: #5a67d8;
+  border-left-color: #5a67d8;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

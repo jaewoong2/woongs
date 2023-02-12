@@ -1,10 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import RightIcon from '@components/icons/RightIcon'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
-import useDebouncedMouseMove from 'hooks/useMouseMove'
 import useDrawer from 'hooks/useDrawer'
 
 const Sidebar = () => {
