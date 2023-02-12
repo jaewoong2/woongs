@@ -2,7 +2,7 @@ import { createCanvas } from 'canvas'
 
 export function generateThumbnailDataURL(title: string): string {
   const canvas = createCanvas(400, 300)
-  const ctx = canvas.getContext('2d')
+  const ctx = canvas.getContext('2d')!
 
   const gradient = ctx.createLinearGradient(0, 0, 0, 300)
   gradient.addColorStop(0, 'hsl(205, 100%, 95%)')

@@ -44,14 +44,16 @@ const Home = ({ recordMap, id, nextId, prevId, error }: Props) => {
   }
 
   return (
-    <div className="xl:px-6 grid grid-cols-12 px-1">
-      <section className="col-span-3"></section>
-      <section className="w-full xl:col-span-6 col-span-full">
-        <NotionRenderer recordMap={recordMap} id={id} />
-        <Footer next={nextId} prevoius={prevId} />
-      </section>
-      <section className="col-span-3"></section>
-    </div>
+    <Layout>
+      <div className="xl:px-6 grid grid-cols-12 px-1">
+        <section className="col-span-3"></section>
+        <section className="w-full xl:col-span-6 col-span-full">
+          <NotionRenderer recordMap={recordMap} id={id} />
+          <Footer next={nextId} prevoius={prevId} />
+        </section>
+        <section className="col-span-3"></section>
+      </div>
+    </Layout>
   )
 }
 
@@ -60,7 +62,7 @@ export default Home
 export const getStaticProps = async ({ params }: { params: { id: string } }) => {
   const result = await notion.getPageInfo({
     pageId: params.id,
-  })
+  })!
 
   if (!result) {
     return {
@@ -82,7 +84,7 @@ export const getStaticPaths = async () => {
   const response = await notion.getAllPosts()
 
   return {
-    fallback: true,
+    fallback: 'blocking',
     paths: response?.map((result) => {
       return { params: { id: result?.id } }
     }),

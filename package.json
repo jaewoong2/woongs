@@ -2,11 +2,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "./setup.sh && next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^13.1.6",
+    "canvas": "2.8.0",
     "next": "latest",
     "next-seo": "^5.15.0",
     "react": "18.2.0",
@@ -27,7 +28,6 @@
     "@typescript-eslint/parser": "^5.49.0",
     "autoprefixer": "^10.4.12",
     "axios": "^1.3.2",
-    "canvas": "^2.11.0",
     "dayjs": "^1.11.7",
     "encoding": "^0.1.13",
     "eslint": "^8.32.0",
@@ -45,6 +45,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.32.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "fs": "^0.0.1-security",
     "github-markdown-css": "^5.1.0",
     "next-redux-wrapper": "^8.1.0",
     "notion-client": "^6.15.8",
