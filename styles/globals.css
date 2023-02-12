@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css');
+
+html,
+body,
+#__next {
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+}
+
+.code {
+  padding: 0 0 0 0 !important;
+  @apply py-6 px-4 !important;
+}
+
+.notion-toggle {
+  width: 100%;
+}
+
+.notion-toggle > summary {
+  width: 100%;
+  position: relative;
+}
+
+.notion-toggle > summary::marker {
+  unicode-bidi: isolate-override;
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+  text-indent: 0px !important;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+.notion-toggle > summary > h1,
+h2,
+h3,
+h4 {
+  width: calc(100% - 20px);
+}
+
+.drawer {
+  @apply ease-in-out duration-300;
+}
+
+.loader {
+  border-top-color: #5a67d8;
+  border-right-color: #5a67d8;
+  border-bottom-color: #5a67d8;
+  border-left-color: #5a67d8;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
