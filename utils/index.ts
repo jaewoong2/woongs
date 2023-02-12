@@ -16,8 +16,6 @@ export function generateThumbnailDataURL(title: string) {
   ctx.textBaseline = 'middle'
   ctx.fillText(title, 200, 150)
 
-  // console.log(canvas.toDataURL())
-
   return canvas.toDataURL()
 }
 
