@@ -2,6 +2,7 @@ import Header from '@components/molecules/Header'
 import Sidebar from '@components/molecules/Sidebar'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
+import Head from 'next/head'
 import React, { PropsWithChildren, useEffect } from 'react'
 
 const Layout = ({ children }: PropsWithChildren) => {

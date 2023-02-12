@@ -13,15 +13,17 @@ interface ArticleProps {
 
 const ArticleCard: React.FC<ArticleProps> = ({ title, href, thumbnail, createdTime }) => {
   return (
-    <div className="p-5 rounded-md flex-col justify-between flex max-w-xs">
+    <div className="p-5 rounded-md flex-col justify-between flex max-w-xs hover:-translate-y-2 transition-transform">
       <Link href={href}>
-        <Image
-          width={200}
-          height={100}
-          alt={title + '이미지'}
-          src={thumbnail}
-          className="max-h-50 w-full h-auto"
-        />
+        <div className="w-fit h-fit">
+          <Image
+            width={200}
+            height={100}
+            alt={title + '이미지'}
+            src={thumbnail}
+            className="max-h-50 w-full h-auto"
+          />
+        </div>
         <h3 className="text-lg mb-2 mt-5">{title}</h3>
         <div className="flex justify-between text-gray-400 text-sm">
           <p>{dayjs(createdTime).format('YYYY.MM.DD').toString()}</p>

@@ -3,6 +3,7 @@ import NotionRenderer from '@components/organisms/NotionRenderer'
 import { ExtendedRecordMap } from 'notion-types'
 import Footer from '@components/organisms/Footer'
 import Layout from '@components/templates/Layout'
+import BlogSEO from '@components/templates/BlogSEO'
 
 type Props = {
   title: string
@@ -14,14 +15,17 @@ type Props = {
 
 const Home = ({ recordMap, id, nextId, prevId }: Props) => {
   return (
-    <div className="xl:px-6 grid grid-cols-12 px-1">
-      <section className="col-span-3"></section>
-      <section className="w-full xl:col-span-6 col-span-full">
-        <NotionRenderer recordMap={recordMap} id={id} />
-        <Footer next={nextId} prevoius={prevId} />
-      </section>
-      <section className="col-span-3"></section>
-    </div>
+    <>
+      <BlogSEO />
+      <div className="xl:px-6 grid grid-cols-12 px-1">
+        <section className="col-span-3"></section>
+        <section className="w-full xl:col-span-6 col-span-full">
+          <NotionRenderer recordMap={recordMap} id={id} />
+          <Footer next={nextId} prevoius={prevId} />
+        </section>
+        <section className="col-span-3"></section>
+      </div>
+    </>
   )
 }
 
