@@ -1,12 +1,8 @@
-import { createCanvas, registerFont } from 'canvas'
+import { createCanvas } from 'canvas'
 
 export function generateThumbnailDataURL(title: string) {
   const canvas = createCanvas(400, 300)
   const ctx = canvas.getContext('2d')!
-  registerFont(
-    'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css',
-    { family: 'Pretendard' }
-  )
 
   const gradient = ctx.createLinearGradient(0, 0, 0, 300)
   gradient.addColorStop(0, 'hsl(205, 100%, 95%)')
@@ -14,7 +10,7 @@ export function generateThumbnailDataURL(title: string) {
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, 400, 300)
 
-  ctx.font = '42px Pretendard'
+  ctx.font = '42px serif'
   ctx.fillStyle = 'hsla(200, 80%, 50%, 0.8)'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
