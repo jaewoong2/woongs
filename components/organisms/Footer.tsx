@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import React from 'react'
+import Link from 'next/link'
+
 import NextButton from '@components/molecules/NextButton'
 import PreviousButton from '@components/molecules/PreviousButton'
 
