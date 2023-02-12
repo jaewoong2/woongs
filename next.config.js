@@ -7,7 +7,6 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   compiler: {},
   experimental: {},
-  swcMinify: true,
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
