@@ -84,7 +84,7 @@ export const getStaticPaths = async () => {
   if (!response) {
     return {
       fallback: false,
-      paths: [''].map((result) => {
+      paths: ['error'].map((result) => {
         return {
           params: {
             id: result,
