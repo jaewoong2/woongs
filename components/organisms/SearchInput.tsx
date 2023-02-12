@@ -1,8 +1,10 @@
-import SearchIcon from '@components/icons/SearchIcon'
+import React, { useCallback, useState } from 'react'
+import { useRouter } from 'next/router'
+
 import useIsMobile from 'hooks/useIsMobile'
 import useSearch from 'hooks/useSearch'
-import { useRouter } from 'next/router'
-import React, { useCallback, useState } from 'react'
+
+import SearchIcon from '@components/icons/SearchIcon'
 
 const SarchInput = () => {
   const [isMobile] = useIsMobile()

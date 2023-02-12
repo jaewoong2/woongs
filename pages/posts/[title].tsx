@@ -34,7 +34,6 @@ export default Home
 export const getStaticProps = async ({ params }: { params: { title: string } }) => {
   const response = await notion.getAllPosts()
   const pageId = response?.find((post) => post?.title === params.title)?.id
-
   const result = await notion.getPageInfo({
     pageId: pageId ?? '',
   })

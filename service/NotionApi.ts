@@ -1,4 +1,3 @@
-import { NotionToMarkdown } from 'notion-to-md'
 import { Client } from '@notionhq/client/build/src'
 import { NotionAPI as Notion } from 'notion-client'
 import { generateThumbnailDataURL } from '@utils/index'
