@@ -62,7 +62,7 @@ export default Home
 export const getStaticProps = async ({ params }: { params: { id: string } }) => {
   const result = await notion.getPageInfo({
     pageId: params.id,
-  })
+  })!
 
   if (!result) {
     return {
@@ -84,7 +84,7 @@ export const getStaticPaths = async () => {
   const response = await notion.getAllPosts()
 
   return {
-    fallback: true,
+    fallback: 'blocking',
     paths: response?.map((result) => {
       return { params: { id: result?.id } }
     }),

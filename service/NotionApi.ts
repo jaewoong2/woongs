@@ -95,7 +95,7 @@ class NotionApi {
     return null
   }
 
-  async getSlug(): Promise<(Item | null)[] | null> {
+  async getSlug() {
     if (this.notionDatabaseKey) {
       const response = await this.notion.databases.query({
         database_id: this.notionDatabaseKey,

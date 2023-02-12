@@ -1,8 +1,7 @@
 import notion from 'service/NotionApi'
-import NotionRenderer from '@components/organisms/NotionRenderer'
 import { ExtendedRecordMap } from 'notion-types'
+import NotionRenderer from '@components/organisms/NotionRenderer'
 import Footer from '@components/organisms/Footer'
-import Layout from '@components/templates/Layout'
 import BlogSEO from '@components/templates/BlogSEO'
 
 type Props = {
@@ -40,7 +39,11 @@ export const getStaticProps = async ({ params }: { params: { title: string } }) 
 
   return {
     props: {
-      ...result,
+      title: result ? result.title : '',
+      id: result ? result.id ?? '' : '',
+      recordMap: result ? result.recordMap : {},
+      nextId: result ? result.nextId ?? {} : {},
+      prevId: result ? result.prevId ?? {} : {},
     },
     revalidate: 1,
   }
@@ -50,12 +53,12 @@ export const getStaticPaths = async () => {
   const response = await notion.getAllPosts()
 
   return {
-    fallback: false,
+    fallback: 'blocking',
     paths: response?.map((result) => {
       if (result) {
         return {
           params: {
-            title: result.title ?? '',
+            title: result ? result.title : '',
           },
         }
       }
