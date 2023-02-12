@@ -40,6 +40,10 @@ const Home = ({ posts, tags }: Props) => {
     }
   }, [router, searchQuery])
 
+  if (process.env.NODE_ENV !== 'development') {
+    return <div className="flex justify-center items-center w-full h-full">준비중 입니다..</div>
+  }
+
   if (result && router.query['q']) {
     return (
       <div className="bg-white font-sans justify-center w-full flex py-20">
