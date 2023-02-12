@@ -49,22 +49,9 @@ export const getStaticProps = async ({ params }: { params: { title: string } }) 
 export const getStaticPaths = async () => {
   const response = await notion.getAllPosts()
 
-  if (!response) {
-    return {
-      fallback: false,
-      paths: ['error'].map((result) => {
-        return {
-          params: {
-            title: result,
-          },
-        }
-      }),
-    }
-  }
-
   return {
     fallback: false,
-    paths: response.map((result) => {
+    paths: response?.map((result) => {
       if (result) {
         return {
           params: {
