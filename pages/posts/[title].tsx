@@ -50,18 +50,22 @@ export const getStaticProps = async ({ params }: { params: { title: string } }) 
 }
 
 export const getStaticPaths = async () => {
-  const response = await notion.getAllPosts()
+  try {
+    const response = await notion.getAllPosts()
 
-  return {
-    fallback: 'blocking',
-    paths: response?.map((result) => {
-      if (result) {
-        return {
-          params: {
-            title: result ? result.title : '',
-          },
+    return {
+      fallback: 'blocking',
+      paths: response?.map((result) => {
+        if (result) {
+          return {
+            params: {
+              title: result ? result.title : '',
+            },
+          }
         }
-      }
-    }),
+      }),
+    }
+  } catch (err) {
+    return { paths: [], fallback: false }
   }
 }

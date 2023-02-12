@@ -1,6 +1,6 @@
 import { createCanvas } from 'canvas'
 
-export function generateThumbnailDataURL(title: string): string {
+export function generateThumbnailDataURL(title: string) {
   const canvas = createCanvas(400, 300)
   const ctx = canvas.getContext('2d')!
 
@@ -16,7 +16,9 @@ export function generateThumbnailDataURL(title: string): string {
   ctx.textBaseline = 'middle'
   ctx.fillText(title, 200, 150)
 
-  return canvas.toDataURL('image/jpeg', 0.9)
+  // console.log(canvas.toDataURL())
+
+  return canvas.toDataURL()
 }
 
 export const isMobile = (): boolean => {
