@@ -91,6 +91,6 @@ export const getStaticPaths = async () => {
       }),
     }
   } catch (err) {
-    return { paths: [], fallback: false }
+    return { paths: [{ params: { id: 'error' } }], fallback: false }
   }
 }

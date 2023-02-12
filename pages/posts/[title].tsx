@@ -66,6 +66,6 @@ export const getStaticPaths = async () => {
       }),
     }
   } catch (err) {
-    return { paths: [], fallback: false }
+    return { paths: [{ params: { title: 'error' } }], fallback: false }
   }
 }
