@@ -1,12 +1,10 @@
 import ArticleCard from '@components/molecules/ArticleCard'
-import Layout from '@components/templates/Layout'
 import useSearch from 'hooks/useSearch'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import notion, { Item } from 'service/NotionApi'
 import { setTags, setPosts } from 'slices/postsSlice'
-import wrapper from 'store/store'
 
 type Props = {
   posts:
@@ -39,10 +37,6 @@ const Home = ({ posts, tags }: Props) => {
       searchQuery(encodeURIComponent(router.query['q']))
     }
   }, [router, searchQuery])
-
-  if (process.env.NODE_ENV !== 'development') {
-    return <div className="flex justify-center items-center w-full h-full">준비중 입니다..</div>
-  }
 
   if (result && router.query['q']) {
     return (
