@@ -10,7 +10,7 @@ export function generateThumbnailDataURL(title: string) {
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, 400, 300)
 
-  ctx.font = '42px serif'
+  ctx.font = '42px Nanum Gothic'
   ctx.fillStyle = 'hsla(200, 80%, 50%, 0.8)'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
