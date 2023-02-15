@@ -45,14 +45,13 @@ export const getStaticProps = async ({ params }: { params: { title: string } }) 
       nextId: result ? result.nextId ?? {} : {},
       prevId: result ? result.prevId ?? {} : {},
     },
-    revalidate: 1,
+    revalidate: 10,
   }
 }
 
 export const getStaticPaths = async () => {
   try {
     const response = await notion.getAllPosts()
-
     return {
       fallback: 'blocking',
       paths: response?.map((result) => {

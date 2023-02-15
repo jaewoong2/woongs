@@ -38,10 +38,10 @@ const Sidebar = () => {
             <RightIcon className="w-3 mr-2" strokeWidth={3} />
             {`🏠 home`}
           </Link>
-          {/* <Link className="text-sm hover:bg-gray-100 w-full p-2 flex" href={'/posts'}>
+          <Link className="text-sm hover:bg-gray-100 w-full p-2 flex" href={'/posts'}>
             <RightIcon className="w-3 mr-2" strokeWidth={3} />
             {`🥳 blog`}
-          </Link> */}
+          </Link>
           <Link className="text-sm hover:bg-gray-100 w-full p-2 flex" href={'/about'}>
             <RightIcon className="w-3 mr-2" strokeWidth={3} />
             {`🤔 me?`}
