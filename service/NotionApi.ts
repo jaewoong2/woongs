@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client/build/src'
 import { NotionAPI as Notion } from 'notion-client'
-import { generateThumbnailDataURL } from '@utils/index'
+import { generateThumbnailDataURL, getParentDBName } from '@utils/index'
 
 const PROPERTIES = 'properties'
 const TITLE = '이름'
@@ -27,6 +27,8 @@ export type Item = {
 class NotionApi {
   notionKey = process.env.NOTION_API_KEY
   notionDatabaseKey = process.env.NOTION_DB_KEY
+  notionALGORITHMKey = process.env.NOTION_ALGORITHM_KEY
+
   notion = new Client({ auth: this.notionKey })
   notionX = new Notion({
     activeUser: process.env.NOTION_ACTIVE_USER,
@@ -167,7 +169,7 @@ class NotionApi {
     try {
       const slugs = await this.getSlug()
       const block = await this.notion.blocks.retrieve({ block_id: pageId })
-      const page = await this.notion.pages.retrieve({ page_id: pageId })
+      const page = (await this.notion.pages.retrieve({ page_id: pageId })) as any
       const recordMap = await this.notionX.getPage(pageId)
 
       if ('created_time' in block && 'child_page' in block && 'properties' in page) {
@@ -175,7 +177,9 @@ class NotionApi {
           const info = slugs.find((slug) => (slug?.post.id === pageId ? slug.post : null))
           return {
             title: block.child_page.title,
+            parentName: getParentDBName(page.parent.database_id) ?? '',
             recordMap,
+            tags: page.properties.Tags.multi_select.map(({ name }: { name: string }) => name),
             ...info?.post,
           }
         }
@@ -183,7 +187,6 @@ class NotionApi {
 
       return null
     } catch (err) {
-      console.log(err)
       return null
     }
   }

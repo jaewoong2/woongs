@@ -8,13 +8,13 @@ type Props = {
   recordMap: ExtendedRecordMap
 }
 
-const Home = ({ id, recordMap }: Props) => {
+const Home = ({ recordMap }: Props) => {
   return (
     <div className="bg-white w-full h-full flex">
       <div className="px-6 grid grid-cols-12 w-full">
         <section className="col-span-3"></section>
         <section className="w-full col-span-full">
-          <NotionRenderer recordMap={recordMap} id={id} />
+          <NotionRenderer recordMap={recordMap} />
         </section>
         <section className="col-span-3"></section>
       </div>

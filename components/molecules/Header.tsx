@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import HambergerIcon from '@components/icons/HambergerIcon'
 import { useRouter } from 'next/router'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
 import Link from 'next/link'
 import SarchInput from '@components/organisms/SearchInput'
+import { useAppSelector } from 'hooks/useReducerHook'
+import Navigation from './Navigation'
 
 const Header = () => {
   const [isFullPage, , setLocalStorageIsFullPage] = useFullPage()
   const [isMobile] = useIsMobile()
-
-  const router = useRouter()
-  const [title, setTitle] = useState('')
-
-  useEffect(() => {
-    const $title = document.querySelector('.notion-title')
-    setTitle($title?.innerHTML ?? '')
-  }, [router.pathname])
+  const { navigation } = useAppSelector((state) => state.styleSlice)
 
   const toggleFullPage = () => {
     setLocalStorageIsFullPage(!isFullPage)
@@ -31,9 +26,9 @@ const Header = () => {
           </Link>
           <Link
             className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center"
-            href={'/posts'}
+            href={'/algorithm'}
           >
-            {`🥳 blog`}
+            {`🥳 algorithm`}
           </Link>
           <Link
             className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center"
@@ -57,7 +52,7 @@ const Header = () => {
         <div className="p-2 hover:bg-gray-200 cursor-pointer rounded-xl" onClick={toggleFullPage}>
           <HambergerIcon className="w-4 text-gray-400" strokeWidth={2} />
         </div>
-        <h1 className="px-2">{title}</h1>
+        <Navigation navigation={navigation} />
       </div>
       <SarchInput />
     </header>

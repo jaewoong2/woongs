@@ -13,7 +13,7 @@ const Home = ({ recordMap }: Props) => {
       <div className="px-6 grid grid-cols-12 w-full">
         <section className="col-span-3"></section>
         <section className="w-full xl:col-span-6 col-span-full">
-          <NotionRenderer recordMap={recordMap} id="init" />
+          <NotionRenderer recordMap={recordMap} />
         </section>
         <section className="col-span-3"></section>
       </div>

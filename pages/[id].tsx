@@ -2,22 +2,34 @@ import notion from 'service/NotionApi'
 import NotionRenderer from '@components/organisms/NotionRenderer'
 import { ExtendedRecordMap } from 'notion-types'
 import Footer from '@components/organisms/Footer'
-import Layout from '@components/templates/Layout'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { useAppDispatch } from 'hooks/useReducerHook'
+import { setNavigation } from 'slices/styleSlice'
 
 type Props = {
   title: string
-  id: string
   recordMap: ExtendedRecordMap
   nextId: { id: string; slug: string }
   prevId: { id: string; slug: string }
-
+  parentName: string
+  id: string
   error?: boolean
 }
 
-const Home = ({ recordMap, id, nextId, prevId, error }: Props) => {
+const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props) => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(
+      setNavigation([
+        { href: parentName, name: parentName },
+        { href: id, name: title },
+      ])
+    )
+  }, [dispatch, id, parentName, title])
 
   if (error) {
     return (
@@ -44,16 +56,14 @@ const Home = ({ recordMap, id, nextId, prevId, error }: Props) => {
   }
 
   return (
-    <Layout>
-      <div className="xl:px-6 grid grid-cols-12 px-1">
-        <section className="col-span-3"></section>
-        <section className="w-full xl:col-span-6 col-span-full">
-          <NotionRenderer recordMap={recordMap} id={id} />
-          <Footer next={nextId} prevoius={prevId} />
-        </section>
-        <section className="col-span-3"></section>
-      </div>
-    </Layout>
+    <div className="xl:px-6 grid grid-cols-12 px-1">
+      <section className="col-span-3"></section>
+      <section className="w-full xl:col-span-6 col-span-full">
+        <NotionRenderer recordMap={recordMap} className="w-full" bodyClassName="w-full" />
+        <Footer next={nextId} prevoius={prevId} />
+      </section>
+      <section className="col-span-3"></section>
+    </div>
   )
 }
 
@@ -75,6 +85,7 @@ export const getStaticProps = async ({ params }: { params: { id: string } }) => 
   return {
     props: {
       ...result,
+      id: params.id,
     },
     revalidate: 1,
   }

@@ -29,17 +29,17 @@ const Footer = ({ prevoius, next }: Props) => {
               disabled={!prevoius}
               className="flex justify-center items-center gap-2 p-4 py-2 disabled:cursor-not-allowed"
             >
-              {prevoius.slug.substring(0, 20)}
+              {prevoius.slug?.substring(0, 20)}
             </PreviousButton>
           </Link>
         )}
-        {next && (
+        {next?.slug && (
           <Link href={`/${next.id}`}>
             <NextButton
               disabled={!next}
               className="flex justify-center items-center gap-2 p-4 py-2 disabled:cursor-not-allowed"
             >
-              {next.slug.substring(0, 20)}
+              {next.slug?.substring(0, 20)}
             </NextButton>
           </Link>
         )}

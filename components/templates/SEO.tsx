@@ -1,4 +1,6 @@
+import { useAppSelector } from 'hooks/useReducerHook'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import Head from 'next/head'
 import React from 'react'
 
 const DEFAULT_SEO: NextSeoProps = {
@@ -28,7 +30,17 @@ const DEFAULT_SEO: NextSeoProps = {
 }
 
 const SEO = (props: Partial<NextSeoProps>) => {
-  return <NextSeo {...props} {...DEFAULT_SEO} />
+  const { navigation } = useAppSelector((state) => state.styleSlice)
+
+  return (
+    <Head>
+      <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+      <link rel="manifest" href="site.webmanifest" />
+      <NextSeo {...props} {...DEFAULT_SEO} title={navigation.at(-1)?.name} />
+    </Head>
+  )
 }
 
 export default SEO
