@@ -2,10 +2,10 @@ import React from 'react'
 
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import Link from 'next/link'
-
 import { ExtendedRecordMap } from 'notion-types'
 import { NotionRenderer as Notion } from 'react-notion-x'
+import BlogLink from './BlogLink'
+import { useRouter } from 'next/router'
 
 type Props = {
   recordMap: ExtendedRecordMap
@@ -22,17 +22,22 @@ const Equation = dynamic(() =>
 )
 
 const NotionRenderer = ({ recordMap, className, bodyClassName }: Props) => {
+  const router = useRouter()
+
   return (
     <Notion
+      mapPageUrl={(props) => {
+        return router.asPath + '/' + props
+      }}
       fullPage={true}
       disableHeader={true}
       darkMode={false}
       components={{
         Code: ({ ...props }: any) => <Code {...props} className="code" />,
+        Link: ({ ...props }: any) => <BlogLink {...props} />,
         Collection,
         Equation,
         nextImage: Image,
-        nextLink: Link,
       }}
       recordMap={recordMap}
       className={className}
