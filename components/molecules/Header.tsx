@@ -7,6 +7,7 @@ import Link from 'next/link'
 import SarchInput from '@components/organisms/SearchInput'
 import { useAppSelector } from 'hooks/useReducerHook'
 import Navigation from './Navigation'
+import Links from './Links'
 
 const Header = () => {
   const [isFullPage, , setLocalStorageIsFullPage] = useFullPage()
@@ -17,32 +18,7 @@ const Header = () => {
     setLocalStorageIsFullPage(!isFullPage)
   }
 
-  if (isMobile) {
-    return (
-      <>
-        <nav className="w-full flex justify-center fixed top-0 z-10 bg-white">
-          <Link className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center" href={'/'}>
-            {`🏠 home`}
-          </Link>
-          <Link
-            className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center"
-            href={'/algorithm'}
-          >
-            {`🥳 algorithm`}
-          </Link>
-          <Link
-            className="text-sm hover:bg-gray-100 w-full p-2 flex justify-center"
-            href={'/about'}
-          >
-            {`🤔 me?`}
-          </Link>
-        </nav>
-        <SarchInput />
-      </>
-    )
-  }
-
-  return (
+  return isMobile ? (
     <header
       className={`flex items-center p-1 ${
         isFullPage ? 'w-[calc(100%-13rem)]' : 'w-full'
@@ -54,8 +30,9 @@ const Header = () => {
         </div>
         <Navigation navigation={navigation} />
       </div>
-      <SarchInput />
     </header>
+  ) : (
+    <></>
   )
 }
 

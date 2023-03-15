@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 
 import NextButton from '@components/molecules/NextButton'
 import PreviousButton from '@components/molecules/PreviousButton'
+import { useRouter } from 'next/router'
 
 type Props = {
   prevoius?: {
@@ -16,6 +17,15 @@ type Props = {
 }
 
 const Footer = ({ prevoius, next }: Props) => {
+  const router = useRouter()
+
+  const previousId = useMemo(
+    () => router.pathname.replace('[id]', prevoius?.id ?? ''),
+    [router, prevoius]
+  )
+
+  const nextId = useMemo(() => router.pathname.replace('[id]', next?.id ?? ''), [router, next])
+
   return (
     <footer className="px-2 pt-4 pb-8 w-full flex justify-center">
       <div
@@ -24,7 +34,7 @@ const Footer = ({ prevoius, next }: Props) => {
         }  max-w-[720px]`}
       >
         {prevoius && (
-          <Link href={`/${prevoius.id}`}>
+          <Link href={`/${previousId}`}>
             <PreviousButton
               disabled={!prevoius}
               className="flex justify-center items-center gap-2 p-4 py-2 disabled:cursor-not-allowed"
@@ -34,7 +44,7 @@ const Footer = ({ prevoius, next }: Props) => {
           </Link>
         )}
         {next?.slug && (
-          <Link href={`/${next.id}`}>
+          <Link href={`/${nextId}`}>
             <NextButton
               disabled={!next}
               className="flex justify-center items-center gap-2 p-4 py-2 disabled:cursor-not-allowed"

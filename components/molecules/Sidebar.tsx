@@ -5,6 +5,7 @@ import RightIcon from '@components/icons/RightIcon'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
 import useDrawer from 'hooks/useDrawer'
+import Links from './Links'
 
 const Sidebar = () => {
   const drawer = useDrawer(false)
@@ -34,22 +35,15 @@ const Sidebar = () => {
         />
         <h6 className="p-3 text-xl font-semibold">재룽지</h6>
         <ul className="w-full">
-          <Link className="text-sm hover:bg-gray-100 w-full p-2 flex" href={'/'}>
-            <RightIcon className="w-3 mr-2" strokeWidth={3} />
-            {`🏠 home`}
-          </Link>
-          <Link className="text-sm hover:bg-gray-100 w-full p-2 flex" href={'/algorithm'}>
-            <RightIcon className="w-3 mr-2" strokeWidth={3} />
-            {`🥳 algorithm`}
-          </Link>
-          <Link className="text-sm hover:bg-gray-100 w-full p-2 flex" href={'/about'}>
-            <RightIcon className="w-3 mr-2" strokeWidth={3} />
-            {`🤔 me?`}
-          </Link>
+          <Links />
         </ul>
       </div>
     </nav>
-  ) : null
+  ) : (
+    <nav className="w-full flex justify-center fixed top-0 z-10 bg-white">
+      <Links />
+    </nav>
+  )
 }
 
 export default Sidebar
