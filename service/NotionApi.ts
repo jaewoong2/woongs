@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client/build/src'
 import { NotionAPI as Notion } from 'notion-client'
-import { generateThumbnailDataURL, getParentDBName } from '@utils/index'
+import { getParentDBName } from '@utils/index'
 
 const PROPERTIES = 'properties'
 const TITLE = '이름'
@@ -80,9 +80,6 @@ class NotionApi {
                 title: result.properties[TITLE].title?.[0]?.plain_text,
                 tags: result.properties[TAGS].multi_select.map(({ name }) => name),
                 id: result.id,
-                thumbnail: generateThumbnailDataURL(
-                  result.properties[TITLE].title?.[0]?.plain_text
-                ),
                 createdTime: result.properties[CREATED_TIME].created_time,
               }
             }
@@ -112,9 +109,6 @@ class NotionApi {
             ) {
               return {
                 slug: result.properties[TITLE].title?.[0]?.plain_text,
-                thumbnail: generateThumbnailDataURL(
-                  result.properties[TITLE].title?.[0]?.plain_text
-                ),
                 createdTime: result.properties[CREATED_TIME].created_time,
                 id: result.id,
               }
