@@ -15,7 +15,7 @@ const BlogLink = ({ ...props }: Props) => {
   return isBlogsPost ? (
     <a {...props} />
   ) : (
-    <Link {...props} href={router.asPath + props.href} ref={null} />
+    <Link {...props} href={router.asPath + '/' + props.href} ref={null} />
   )
 }
 

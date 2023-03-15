@@ -1,19 +1,18 @@
 import NotionRenderer from '@components/organisms/NotionRenderer'
-import { useAppDispatch } from 'hooks/useReducerHook'
+import useNavigation from 'hooks/useNavigation'
 import { useEffect } from 'react'
 import notion from 'service/NotionApi'
-import { setNavigation } from 'slices/styleSlice'
 
 type Props = {
   recordMap: any
 }
 
 const Home = ({ recordMap }: Props) => {
-  const dispatch = useAppDispatch()
+  const { addNavigation } = useNavigation()
 
   useEffect(() => {
-    dispatch(setNavigation([{ href: 'algorithm', name: '알고리즘' }]))
-  }, [dispatch])
+    addNavigation({ href: 'algorithm', name: '알고리즘' })
+  }, [addNavigation])
 
   return (
     <div className="bg-white font-sans justify-center w-full flex py-20">

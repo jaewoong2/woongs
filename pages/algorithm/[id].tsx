@@ -29,6 +29,10 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
         { href: id, name: title },
       ])
     )
+
+    return () => {
+      setNavigation([])
+    }
   }, [dispatch, id, parentName, title])
 
   if (error) {

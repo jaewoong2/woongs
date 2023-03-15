@@ -1,5 +1,6 @@
 import Header from '@components/molecules/Header'
 import Sidebar from '@components/molecules/Sidebar'
+import useDebouncedCallback from 'hooks/useDebouncedCallback'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
 import React, { PropsWithChildren, useEffect } from 'react'
@@ -7,20 +8,7 @@ import React, { PropsWithChildren, useEffect } from 'react'
 const Layout = ({ children }: PropsWithChildren) => {
   const [isFullPage] = useFullPage()
   const [isMobile, setIsMobile] = useIsMobile()
-
-  useEffect(() => {
-    const listener = () => {
-      if (window.innerWidth <= 640) {
-        setIsMobile(true)
-      } else {
-        setIsMobile(false)
-      }
-    }
-    window.addEventListener('resize', listener)
-    return () => {
-      window.removeEventListener('resize', listener)
-    }
-  }, [setIsMobile])
+  const debounceCallback = useDebouncedCallback()
 
   return (
     <section className="w-full h-full flex">

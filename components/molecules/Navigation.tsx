@@ -13,12 +13,10 @@ const Navigation = ({ navigation }: Props) => {
     <nav className="flex gap-2">
       <h1 className="px-2 sr-only">{navigation.at(-1)?.name}</h1>
       {navigation.slice(0, navigation.length - 1)?.map(({ href, name }) => (
-        <>
-          <Link className="hover:text-gray-500" href={href} key={name}>
-            {name}
-          </Link>
+        <Link className="hover:text-gray-500" href={href} key={name}>
+          {name}
           {' / '}
-        </>
+        </Link>
       ))}
       <Link
         className="hover:text-gray-500"

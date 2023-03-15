@@ -12,7 +12,6 @@ import 'prismjs/themes/prism-tomorrow.css'
 import '../styles/globals.css'
 
 import Prism from 'prismjs'
-import 'prismjs/components/prism-python'
 import { useEffect } from 'react'
 
 const App = ({ Component, ...rest }: AppProps) => {
@@ -21,8 +20,10 @@ const App = ({ Component, ...rest }: AppProps) => {
   const mounted = useMounted()
 
   useEffect(() => {
-    Prism?.highlightAll()
-  }, [])
+    if (Prism) {
+      Prism?.highlightAll()
+    }
+  }, [Prism])
 
   return (
     mounted && (
