@@ -1,7 +1,5 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import React, { useMemo } from 'react'
-import RightIcon from '@components/icons/RightIcon'
+import Image from 'next/image'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
 import useDrawer from 'hooks/useDrawer'

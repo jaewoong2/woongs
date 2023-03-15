@@ -18,7 +18,7 @@ const Header = () => {
     setLocalStorageIsFullPage(!isFullPage)
   }
 
-  return isMobile ? (
+  return !isMobile ? (
     <header
       className={`flex items-center p-1 ${
         isFullPage ? 'w-[calc(100%-13rem)]' : 'w-full'
@@ -31,9 +31,7 @@ const Header = () => {
         <Navigation navigation={navigation} />
       </div>
     </header>
-  ) : (
-    <></>
-  )
+  ) : null
 }
 
 export default Header

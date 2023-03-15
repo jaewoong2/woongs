@@ -70,6 +70,14 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
 export default Home
 
 export const getStaticProps = async ({ params }: { params: { id: string } }) => {
+  if (!params.id) {
+    return {
+      props: {
+        error: true,
+      },
+    }
+  }
+
   const result = await notion.getPageInfo({
     pageId: params.id,
   })!
