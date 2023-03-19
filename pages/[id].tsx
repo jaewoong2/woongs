@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { useAppDispatch } from 'hooks/useReducerHook'
 import { setNavigation } from 'slices/styleSlice'
+import BlogLink from '@components/organisms/BlogLink'
 
 type Props = {
   title: string
@@ -23,19 +24,21 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(
-      setNavigation([
-        { href: parentName, name: parentName },
-        { href: id, name: title },
-      ])
-    )
-  }, [dispatch, id, parentName, title])
+    if (!error) {
+      dispatch(
+        setNavigation([
+          { href: parentName, name: parentName },
+          { href: id, name: title },
+        ])
+      )
+    }
+  }, [dispatch, error, id, parentName, title])
 
   if (error) {
     return (
       <div className="w-full h-full flex justify-center items-center font-semibold flex-col">
         <span>404: 잘못된 페이지 접근 입니다.</span>
-        <Link href={'/posts'} className="p-2 bg-purple-400 text-white rounded-lg w-fit">
+        <Link href="/algorithm" className="p-2 bg-purple-400 text-white rounded-lg w-fit">
           목록
         </Link>
       </div>
@@ -70,6 +73,14 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
 export default Home
 
 export const getStaticProps = async ({ params }: { params: { id: string } }) => {
+  if (params.id === 'erorr') {
+    return {
+      props: {
+        error: true,
+      },
+    }
+  }
+
   const result = await notion.getPageInfo({
     pageId: params.id,
   })!

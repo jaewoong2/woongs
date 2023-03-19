@@ -7,6 +7,9 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { useAppDispatch } from 'hooks/useReducerHook'
 import { setNavigation } from 'slices/styleSlice'
+import wrapper from 'store/store'
+import { setSEO } from 'slices/seoSlice'
+import SEO from '@components/templates/SEO'
 
 type Props = {
   title: string
@@ -63,6 +66,7 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
     <div className="xl:px-6 grid grid-cols-12 px-1">
       <section className="col-span-3"></section>
       <section className="w-full xl:col-span-6 col-span-full">
+        <SEO />
         <NotionRenderer recordMap={recordMap} className="w-full" bodyClassName="w-full" />
         <Footer next={nextId} prevoius={prevId} />
       </section>
@@ -73,7 +77,7 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
 
 export default Home
 
-export const getStaticProps = async ({ params }: { params: { id: string } }) => {
+export const getStaticProps = wrapper.getStaticProps((store) => async ({ params }: any) => {
   if (!params.id) {
     return {
       props: {
@@ -94,14 +98,23 @@ export const getStaticProps = async ({ params }: { params: { id: string } }) => 
     }
   }
 
+  store.dispatch(
+    setSEO({
+      title: result.title,
+    })
+  )
+
+  console.log(store.getState().seoSlice)
+
   return {
     props: {
       ...result,
+      error: false,
       id: params.id,
     },
     revalidate: 1,
   }
-}
+})
 
 export const getStaticPaths = async () => {
   try {

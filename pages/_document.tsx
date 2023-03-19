@@ -1,4 +1,4 @@
-import Layout from '@components/templates/Layout'
+import SEO from '@components/templates/SEO'
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {

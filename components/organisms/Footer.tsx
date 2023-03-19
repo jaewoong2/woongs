@@ -28,8 +28,6 @@ const Footer = ({ prevoius, next }: Props) => {
 
   const nextId = useMemo(() => router.pathname.replace('[id]', next?.id ?? ''), [router, next])
 
-  console.log(previousId, nextId)
-
   return (
     <footer className="px-2 pt-4 pb-8 w-full flex justify-center">
       <div className={`flex w-full px-2 ${prevoius ? 'justify-between' : 'justify-end'}`}>

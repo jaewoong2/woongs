@@ -6,6 +6,7 @@ import { ExtendedRecordMap } from 'notion-types'
 import { NotionRenderer as Notion } from 'react-notion-x'
 import BlogLink from './BlogLink'
 import { useRouter } from 'next/router'
+import BlogSEO from '@components/templates/BlogSEO'
 
 type Props = {
   recordMap: ExtendedRecordMap
@@ -25,24 +26,27 @@ const NotionRenderer = ({ recordMap, className, bodyClassName }: Props) => {
   const router = useRouter()
 
   return (
-    <Notion
-      mapPageUrl={(props) => {
-        return router.asPath + '/' + props
-      }}
-      fullPage={true}
-      disableHeader={true}
-      darkMode={false}
-      components={{
-        Code: ({ ...props }: any) => <Code {...props} className="code" />,
-        Link: ({ ...props }: any) => <BlogLink {...props} />,
-        Collection,
-        Equation,
-        nextImage: Image,
-      }}
-      recordMap={recordMap}
-      className={className}
-      bodyClassName={bodyClassName}
-    />
+    <>
+      <BlogSEO />
+      <Notion
+        mapPageUrl={(props) => {
+          return router.asPath + '/' + props
+        }}
+        fullPage={true}
+        disableHeader={true}
+        darkMode={false}
+        components={{
+          Code: ({ ...props }: any) => <Code {...props} className="code" />,
+          Link: ({ ...props }: any) => <BlogLink {...props} />,
+          Collection,
+          Equation,
+          nextImage: Image,
+        }}
+        recordMap={recordMap}
+        className={className}
+        bodyClassName={bodyClassName}
+      />
+    </>
   )
 }
 

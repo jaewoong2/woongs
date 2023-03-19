@@ -7,8 +7,7 @@ import React, { PropsWithChildren, useEffect } from 'react'
 
 const Layout = ({ children }: PropsWithChildren) => {
   const [isFullPage] = useFullPage()
-  const [isMobile, setIsMobile] = useIsMobile()
-  const debounceCallback = useDebouncedCallback()
+  const [isMobile] = useIsMobile()
 
   return (
     <section className="w-full h-full flex">
