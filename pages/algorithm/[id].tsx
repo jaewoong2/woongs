@@ -5,11 +5,10 @@ import Footer from '@components/organisms/Footer'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useEffect } from 'react'
-import { useAppDispatch } from 'hooks/useReducerHook'
-import { setNavigation } from 'slices/styleSlice'
 import wrapper from 'store/store'
 import { setSEO } from 'slices/seoSlice'
 import SEO from '@components/templates/SEO'
+import useNavigation from 'hooks/useNavigation'
 
 type Props = {
   title: string
@@ -23,20 +22,15 @@ type Props = {
 
 const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props) => {
   const router = useRouter()
-  const dispatch = useAppDispatch()
+
+  const { setBreadCrumbs } = useNavigation()
 
   useEffect(() => {
-    dispatch(
-      setNavigation([
-        { href: '/algorithm', name: parentName },
-        { href: id, name: title },
-      ])
-    )
-
-    return () => {
-      setNavigation([])
-    }
-  }, [dispatch, id, parentName, title])
+    setBreadCrumbs([
+      { href: '/algorithm', name: parentName },
+      { href: id, name: title },
+    ])
+  }, [setBreadCrumbs, parentName, title, id])
 
   if (error) {
     return (

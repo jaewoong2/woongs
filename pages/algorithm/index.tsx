@@ -8,11 +8,11 @@ type Props = {
 }
 
 const Home = ({ recordMap }: Props) => {
-  const { addNavigation } = useNavigation()
+  const { setBreadCrumbs } = useNavigation()
 
   useEffect(() => {
-    addNavigation({ href: 'algorithm', name: '알고리즘' })
-  }, [addNavigation])
+    setBreadCrumbs([{ href: 'algorithm', name: '알고리즘' }])
+  }, [setBreadCrumbs])
 
   return (
     <div className="bg-white font-sans justify-center w-full flex py-20">

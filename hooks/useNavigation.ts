@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { setNavigation } from 'slices/styleSlice'
 import { useAppDispatch } from './useReducerHook'
 
@@ -11,23 +11,31 @@ const useNavigation = () => {
   const [breadCrumbs, setBreadCrumbs] = useState<Navigtaion[]>([])
   const dispatch = useAppDispatch()
 
-  const addNavigation = (breadCrumb: Navigtaion) => {
-    setBreadCrumbs((prev) => [...prev, breadCrumb])
-  }
+  const addNavigation = useCallback((breadCrumb: Navigtaion | Navigtaion[]) => {
+    if ('length' in breadCrumb) {
+      setBreadCrumbs((prev) => [...prev, ...breadCrumb])
+    } else {
+      setBreadCrumbs((prev) => [...prev, breadCrumb])
+    }
+  }, [])
 
-  const reset = () => {
-    setBreadCrumbs(() => [])
-  }
+  const reset = useCallback(() => {
+    dispatch(setNavigation([]))
+  }, [])
 
   useEffect(() => {
-    dispatch(setNavigation(breadCrumbs))
-
+    reset()
     return () => {
       reset()
     }
-  }, [dispatch, breadCrumbs])
+  }, [reset, dispatch])
+
+  useEffect(() => {
+    dispatch(setNavigation(breadCrumbs))
+  }, [breadCrumbs])
 
   return {
+    setBreadCrumbs,
     addNavigation,
     reset,
   }
