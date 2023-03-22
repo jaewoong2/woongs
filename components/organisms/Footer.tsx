@@ -36,7 +36,7 @@ const Footer = ({ prevoius, next }: Props) => {
             <PreviousButton
               disabled={!prevoius}
               className={`flex justify-center items-center gap-2 p-4 py-2 disabled:cursor-not-allowed ${
-                isMobile ? 'w-[100%]' : ''
+                isMobile ? 'w-[100%] text-sm max-w-[150px]' : ''
               }`}
             >
               {prevoius.slug?.substring(0, 20)}
@@ -47,8 +47,8 @@ const Footer = ({ prevoius, next }: Props) => {
           <Link href={`${nextId}`}>
             <NextButton
               disabled={!next}
-              className={`flex justify-center items-center gap-2 px-4 py-2 disabled:cursor-not-allowed ${
-                isMobile ? 'w-[100%]' : ''
+              className={`flex justify-center items-center gap-2 p-4 py-2 disabled:cursor-not-allowed ${
+                isMobile ? 'w-[100%] text-sm max-w-[150px]' : ''
               }`}
             >
               {next.slug?.substring(0, 20)}
