@@ -60,7 +60,6 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
     <div className="xl:px-6 grid grid-cols-12 px-1">
       <section className="col-span-3"></section>
       <section className="w-full xl:col-span-6 col-span-full">
-        <SEO />
         <NotionRenderer recordMap={recordMap} className="w-full" bodyClassName="w-full" />
         <Footer next={nextId} prevoius={prevId} />
       </section>

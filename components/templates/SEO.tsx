@@ -2,10 +2,16 @@ import { useAppSelector } from 'hooks/useReducerHook'
 import useSEO from 'hooks/useSEO'
 import { NextSeo } from 'next-seo'
 import Head from 'next/head'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
 const SEO = () => {
-  const [seo] = useSEO()
+  const [seo, setSEO] = useSEO()
+  const router = useRouter()
+
+  useEffect(() => {
+    setSEO({ title: '' })
+  }, [router.pathname])
 
   return (
     <>

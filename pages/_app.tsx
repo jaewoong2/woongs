@@ -29,6 +29,7 @@ const App = ({ Component, ...rest }: AppProps) => {
     mounted && (
       <Provider store={store}>
         <Layout>
+          <SEO />
           <Component {...pageProps} />
         </Layout>
       </Provider>
