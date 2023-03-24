@@ -7,21 +7,19 @@ const sleep = (ms: number = 100) =>
     }, ms)
   })
 
-function useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean {
+function useHover<T extends HTMLElement = HTMLElement>(elementRef?: RefObject<T>) {
   const [value, setValue] = useState<boolean>(false)
 
-  const handleMouseEnter = useCallback(async () => {
-    await sleep()
+  const handleMouseEnter = useCallback(() => {
     setValue(true)
   }, [])
 
-  const handleMouseLeave = useCallback(async () => {
-    await sleep()
+  const handleMouseLeave = useCallback(() => {
     setValue(false)
   }, [])
 
   useEffect(() => {
-    const element = elementRef.current
+    const element = elementRef?.current
     element?.addEventListener('mouseenter', handleMouseEnter)
     element?.addEventListener('mouseleave', handleMouseLeave)
     return () => {
@@ -30,7 +28,7 @@ function useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>)
     }
   }, [elementRef, handleMouseEnter, handleMouseLeave])
 
-  return value
+  return { isHover: value, handleMouseEnter, handleMouseLeave }
 }
 
 export default useHover

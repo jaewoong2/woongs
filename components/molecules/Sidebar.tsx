@@ -1,24 +1,23 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Image from 'next/image'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
 import useDrawer from 'hooks/useDrawer'
 import Links from './Links'
+import { useAppDispatch } from 'hooks/useReducerHook'
 
 const Sidebar = () => {
   const drawer = useDrawer(false)
   const [isFullPage] = useFullPage()
   const [isMobile] = useIsMobile()
 
-  const navStyle = useMemo(
-    () =>
-      !isFullPage
-        ? drawer
-          ? 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 ease-in-out duration-500 opacity-100 translate-x-0 drop-shadow-xl'
-          : 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 ease-in-out duration-500 -translate-x-full opacity-0'
-        : 'fixed h-full',
-    [isFullPage, drawer]
-  )
+  const navStyle = useMemo(() => {
+    return !isFullPage
+      ? drawer
+        ? 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 ease-in-out duration-500 opacity-100 translate-x-0 drop-shadow-xl'
+        : 'fixed h-[80%] py-8 shadow-xl rounded-xl top-12 ease-in-out duration-500 -translate-x-full opacity-0'
+      : 'fixed h-full'
+  }, [isFullPage, drawer])
 
   return !isMobile ? (
     <nav className={`w-52 bg-stone-50 ${navStyle} z-20`}>

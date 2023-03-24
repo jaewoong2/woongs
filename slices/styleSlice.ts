@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { isMobile } from '@utils/index'
+import { isMobile, getLocalStorage } from '@utils/index'
 
 const STYLE_SLICE = 'slice/style'
 
@@ -10,7 +10,7 @@ export type Style = {
 }
 
 const initialState: Style = {
-  isFullPage: true,
+  isFullPage: getLocalStorage('isFullPage') ?? false,
   isMobile: isMobile(),
   navigation: [],
 }

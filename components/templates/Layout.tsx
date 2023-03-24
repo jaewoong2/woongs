@@ -1,9 +1,8 @@
 import Header from '@components/molecules/Header'
 import Sidebar from '@components/molecules/Sidebar'
-import useDebouncedCallback from 'hooks/useDebouncedCallback'
 import useFullPage from 'hooks/useFullPage'
 import useIsMobile from 'hooks/useIsMobile'
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { PropsWithChildren, useEffect, useState } from 'react'
 
 const Layout = ({ children }: PropsWithChildren) => {
   const [isFullPage] = useFullPage()
@@ -24,4 +23,4 @@ const Layout = ({ children }: PropsWithChildren) => {
   )
 }
 
-export default Layout
+export default React.memo(Layout)

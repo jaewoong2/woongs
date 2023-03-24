@@ -5,6 +5,13 @@ export const isMobile = (): boolean => {
   if (typeof window === 'undefined') return false
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 }
+export function getLocalStorage(key: string): boolean | null {
+  if (typeof window !== 'undefined') {
+    const value = localStorage.getItem(key)
+    return value !== null ? Boolean(JSON.parse(value)) : null
+  }
+  return false
+}
 
 export function getParentDBName(parentDBid: string) {
   if (process.env.NOTION_DB_KEY) {

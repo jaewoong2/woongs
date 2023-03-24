@@ -1,11 +1,14 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { setIsFullPage } from 'slices/styleSlice'
 import useLocalStorage from './useLocalStorage'
 import { useAppDispatch, useAppSelector } from './useReducerHook'
 
 const useFullPage = () => {
   const { isFullPage } = useAppSelector((state) => state.styleSlice)
-  const [, setLocalStorageIsFullPage] = useLocalStorage('isFullPage', isFullPage)
+  const [localStorageIsFullPage, setLocalStorageIsFullPage] = useLocalStorage(
+    'isFullPage',
+    isFullPage
+  )
   const dispatch = useAppDispatch()
 
   const setFullPage = useCallback(
@@ -22,6 +25,10 @@ const useFullPage = () => {
     },
     [setLocalStorageIsFullPage, dispatch]
   )
+
+  useEffect(() => {
+    dispatch(setIsFullPage(localStorageIsFullPage))
+  }, [localStorageIsFullPage, dispatch])
 
   return [isFullPage, setFullPage, setLocalStorageFullPage] as const
 }

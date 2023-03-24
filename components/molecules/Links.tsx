@@ -1,23 +1,16 @@
 import DownIcon from '@components/icons/DownIcon'
 import RightIcon from '@components/icons/RightIcon'
-import useNavigation from 'hooks/useNavigation'
+import useDirectories from 'hooks/useDirectories'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import useIsMobile from '../../hooks/useIsMobile'
 
-const LINKS: [string, string][] = [
-  ['/', '🏠 home'],
-  ['/algorithm', '🥳 algorithm'],
-  ['/about', '🤔 me?'],
-]
-
 const Links = () => {
   const [isMobile] = useIsMobile()
   const [current, setCurrent] = useState('/')
   const router = useRouter()
-
-  // console.log(router)
+  const { dirs } = useDirectories()
 
   useEffect(() => {
     setCurrent('/' + router.asPath.split('/')[1])
@@ -25,11 +18,11 @@ const Links = () => {
 
   return (
     <>
-      {LINKS.map(([href, name]) => (
+      {dirs.map(([href, name]) => (
         <Link
           key={name}
           className={`text-sm hover:bg-gray-100 w-full p-2 flex ${
-            isMobile ? 'justify-center' : ''
+            isMobile ? 'justify-center items-center' : ''
           } ${current === href ? 'bg-blue-50' : ''}`}
           href={href}
         >
@@ -45,4 +38,4 @@ const Links = () => {
   )
 }
 
-export default Links
+export default React.memo(Links)
