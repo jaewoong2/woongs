@@ -1,3 +1,6 @@
+import fs from 'fs'
+import path from 'path'
+
 export const isMobile = (): boolean => {
   if (typeof window === 'undefined') return false
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
@@ -14,4 +17,20 @@ export function getParentDBName(parentDBid: string) {
     }
   }
   return null
+}
+
+export async function getDirectories(): Promise<string[]> {
+  const pagesDir: string = path.join(process.cwd(), 'pages')
+
+  return new Promise((resolve, reject) => {
+    fs.readdir(pagesDir, (err, files) => {
+      if (err) reject(err)
+
+      const directories: string[] = files.filter((file): file is string =>
+        fs.statSync(path.join(pagesDir, file)).isDirectory()
+      )
+
+      resolve(directories)
+    })
+  })
 }

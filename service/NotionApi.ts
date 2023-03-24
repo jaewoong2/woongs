@@ -166,6 +166,8 @@ class NotionApi {
       const page = (await this.notion.pages.retrieve({ page_id: pageId })) as any
       const recordMap = await this.notionX.getPage(pageId)
 
+      if (pageId === process.env.NOTION_PARENT) console.log(block)
+
       if ('created_time' in block && 'child_page' in block && 'properties' in page) {
         if (slugs) {
           const info = slugs.find((slug) => (slug?.post.id === pageId ? slug.post : null))
