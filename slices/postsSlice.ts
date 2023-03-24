@@ -1,37 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const POSTS_SLICE = 'slice/posts'
+const TAGS_SLICE = 'slice/posts'
 
-type Post = {
-  id: string
-  title: string
-  tags: string[]
-  thumbnail: string
-  createdTime: string
-} | null
-
-export type POST = {
-  posts: Post[]
-  tags: string[][]
+export type TAG = {
+  tags: { [key: string]: Set<string> } | null
 }
 
-const initialState: POST = {
-  posts: [],
-  tags: [],
+const initialState: TAG = {
+  tags: null,
 }
 
 export const postsSlice = createSlice({
-  name: POSTS_SLICE,
+  name: TAGS_SLICE,
   initialState,
   reducers: {
-    setPosts(state, action: PayloadAction<POST['posts']>) {
-      state.posts = action.payload
-    },
-    setTags(state, action: PayloadAction<POST['tags']>) {
+    setTags(state, action: PayloadAction<TAG['tags']>) {
       state.tags = action.payload
     },
   },
 })
 
-export const { setPosts, setTags } = postsSlice.actions
+export const { setTags } = postsSlice.actions
 export default postsSlice.reducer

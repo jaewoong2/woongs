@@ -35,6 +35,30 @@ class NotionApi {
     authToken: process.env.NOTION_TOKEN_V2,
   })
 
+  async getTagsMap() {
+    const r = await this.notion.search({
+      filter: { property: 'object', value: 'page' },
+    })
+
+    const map: any = {}
+
+    r.results.forEach((v: any) => {
+      const c = {
+        id: v.id,
+        tags: v.properties['Tags']?.multi_select?.map((v: any) => v.name),
+      }
+
+      c?.tags?.forEach((tag: string) => {
+        if (!(tag in map)) {
+          map[tag] = []
+        }
+        map[tag].push(c.id)
+      })
+    })
+
+    return map
+  }
+
   async getPage(pageId: string) {
     const recordMap = await this.notionX.getPage(pageId)
     return recordMap
@@ -165,8 +189,6 @@ class NotionApi {
       const block = await this.notion.blocks.retrieve({ block_id: pageId })
       const page = (await this.notion.pages.retrieve({ page_id: pageId })) as any
       const recordMap = await this.notionX.getPage(pageId)
-
-      if (pageId === process.env.NOTION_PARENT) console.log(block)
 
       if ('created_time' in block && 'child_page' in block && 'properties' in page) {
         if (slugs) {

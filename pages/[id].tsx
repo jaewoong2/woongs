@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import { useAppDispatch } from 'hooks/useReducerHook'
 import { setNavigation } from 'slices/styleSlice'
 import BlogLink from '@components/organisms/BlogLink'
+import wrapper from 'store/store'
+import { setTags } from 'slices/postsSlice'
 
 type Props = {
   title: string
@@ -63,7 +65,7 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
       <section className="col-span-3"></section>
       <section className="w-full xl:col-span-6 col-span-full">
         <NotionRenderer recordMap={recordMap} className="w-full" bodyClassName="w-full" />
-        <Footer next={nextId} prevoius={prevId} />
+        <Footer next={nextId} previous={prevId} />
       </section>
       <section className="col-span-3"></section>
     </div>
@@ -72,13 +74,18 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
 
 export default Home
 
-export const getStaticProps = async ({ params }: { params: { id: string } }) => {
+export const getStaticProps = wrapper.getStaticProps((store) => async ({ params }: any) => {
   if (params.id === 'erorr') {
     return {
       props: {
         error: true,
       },
     }
+  }
+
+  if (!store.getState().postsSlice.tags) {
+    const tagsMap = await notion.getTagsMap()
+    store.dispatch(setTags(tagsMap))
   }
 
   const result = await notion.getPageInfo({
@@ -97,10 +104,11 @@ export const getStaticProps = async ({ params }: { params: { id: string } }) => 
     props: {
       ...result,
       id: params.id,
+      error: false,
     },
     revalidate: 1,
   }
-}
+})
 
 export const getStaticPaths = async () => {
   try {

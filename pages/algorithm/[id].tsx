@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import wrapper from 'store/store'
 import { setSEO } from 'slices/seoSlice'
 import useNavigation from 'hooks/useNavigation'
+import { setTags } from 'slices/postsSlice'
 
 type Props = {
   title: string
@@ -21,7 +22,6 @@ type Props = {
 
 const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props) => {
   const router = useRouter()
-
   const { setBreadCrumbs } = useNavigation()
 
   useEffect(() => {
@@ -57,10 +57,10 @@ const Home = ({ recordMap, nextId, prevId, id, title, error, parentName }: Props
 
   return (
     <div className="xl:px-6 grid grid-cols-12 px-1">
-      <section className="col-span-3"></section>
-      <section className="w-full xl:col-span-6 col-span-full">
+      <section className="col-span-3 xl:col-span-1"></section>
+      <section className="w-full xl:col-span-10 col-span-full">
         <NotionRenderer recordMap={recordMap} className="w-full" bodyClassName="w-full" />
-        <Footer next={nextId} prevoius={prevId} />
+        <Footer next={nextId} previous={prevId} />
       </section>
       <section className="col-span-3"></section>
     </div>
@@ -76,6 +76,11 @@ export const getStaticProps = wrapper.getStaticProps((store) => async ({ params 
         error: true,
       },
     }
+  }
+
+  if (!store.getState().postsSlice.tags) {
+    const tagsMap = await notion.getTagsMap()
+    store.dispatch(setTags(tagsMap))
   }
 
   const result = await notion.getPageInfo({
@@ -95,8 +100,6 @@ export const getStaticProps = wrapper.getStaticProps((store) => async ({ params 
       title: result.title,
     })
   )
-
-  console.log(store.getState().seoSlice)
 
   return {
     props: {

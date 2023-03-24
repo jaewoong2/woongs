@@ -17,6 +17,7 @@ const rootReducer: typeof combinedReducer = (state, action) => {
       ...state,
       ...action.payload,
     }
+
     return nextState
   } else {
     return combinedReducer(state, action)
