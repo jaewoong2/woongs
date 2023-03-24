@@ -10,7 +10,10 @@ const SEO = () => {
   const router = useRouter()
 
   useEffect(() => {
-    setSEO({ title: '' })
+    setSEO({
+      title: '',
+      canonical: router.asPath,
+    })
   }, [router.pathname])
 
   return (
@@ -26,4 +29,4 @@ const SEO = () => {
   )
 }
 
-export default SEO
+export default React.memo(SEO)

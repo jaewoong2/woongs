@@ -15,7 +15,7 @@ export const DEFAULT_OPEN_GRAPH: OpenGraph = {
     authors: ['@Jaewoong2'],
     tags: ['프론트엔드', '자바스크립트', '리엑트', '타입스크립트', '알고리즘'],
   },
-  url: 'https://woongs.vercel.app/',
+  url: 'https://woongs.vercel.app',
   images: [DEFAULT_OPEN_GRAPH_IMAGE],
   site_name: '누룽지 사이트, “재룽지”',
 }
@@ -24,7 +24,8 @@ export const DEFAULT_NEXT_SEO_PROPS: NextSeoProps = {
   title: '누룽지 사이트, “재룽지”',
   description:
     '자바스크립트 / 타입스크립트 / 리엑트 / 알고리즘 등을 꾹꾹 눌러 누룽지 처럼 작성해 놓은 기술 블로그',
-  canonical: 'https://woongs.vercel.app/',
+  canonical:
+    process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://woongs.vercel.app',
   openGraph: DEFAULT_OPEN_GRAPH,
   additionalMetaTags: [
     {
